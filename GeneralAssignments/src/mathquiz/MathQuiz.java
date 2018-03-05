@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * A program of a basic math quiz that gets harder or easier based on correct 
+ * or incorrect answers.
  */
 package mathquiz;
     import java.util.Random;
@@ -19,7 +18,7 @@ public class MathQuiz {
     static int timesAttempted;
     static final int TIMES_ALLOWED = 3;
     static boolean harder = false;
-    static final int UPPER_LIMIT = 3;
+    static final int UPPER_LIMIT = 12;
     
     /**
      * @param args the command line arguments
@@ -81,7 +80,7 @@ public class MathQuiz {
     public static void incorrect(){
         System.out.println("Incorrect! \nYou have tried " + timesAttempted + " times.");
         System.out.println("You can try " + TIMES_ALLOWED + " times.");
-    }
+    }//close incorrect
     
     /**
      * gets an answer from the user. Advances the timesAttempted count
@@ -90,7 +89,7 @@ public class MathQuiz {
         Scanner scanAnswer = new Scanner(System.in);
         userAnswer = scanAnswer.nextDouble();
         timesAttempted ++;
-    }
+    }//close get answer
     
     /**
      * decide if 
@@ -103,7 +102,37 @@ public class MathQuiz {
             harder =  true;
         }else harder = false;
         return harder;
-    }
+    }//close getHarder
+    
+    /**
+     * set 3 variables to random integers
+     */
+    public static void setVariables(){
+        a = ranGen();
+        b = ranGen();
+        c = ranGen();
+    }//close setVariables
+    
+    /**
+     * set 3 variables to random integers when b is a divisor
+     */
+    public static void setDivisorVariables(){
+        a = ranGen();
+        b = notZeroGen();
+        c = ranGen();
+    }//close setDivisorVaribales
+    
+    public static void answerCollection(){
+        for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
+            getAnswer();
+            if(userAnswer == realAnswer){
+                correct();
+                break;
+            }else{
+                incorrect();
+            }//close if/else
+        }//close for loop
+    }// close answerCollection 
     
     /**
      * first easy math problem
@@ -111,20 +140,12 @@ public class MathQuiz {
     public static void easy1(){
         while(harder = false){
             System.out.println("Try this:");
-            a=ranGen();
-            b=ranGen();
+            setVariables();
         
             realAnswer = a+b;
-            for(timesAttempted = 0;timesAttempted < TIMES_ALLOWED;){
-                System.out.println(a + " + " + b + " =");
-                getAnswer();
-                if (userAnswer == realAnswer){
-                    correct();
-                    break;
-                }else{
-                    incorrect();
-                }//close if/else
-            }//close for loop
+            System.out.println(a + " + " + b + " =");
+            answerCollection();
+            
             harder = getHarder();
         }//close while loop
         
@@ -134,20 +155,12 @@ public class MathQuiz {
      * second easy math problem
      */
     public static void easy2(){
-        a=ranGen();
-        b=ranGen();
+        setVariables();
         
         realAnswer = a-b;
-        for(timesAttempted = 0;timesAttempted < TIMES_ALLOWED;){
-            System.out.println(a + " - " + b + " =");
-            getAnswer();
-            if (userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        System.out.println(a + " - " + b + " =");
+        answerCollection();
+        
         harder = getHarder();
         if(harder = false){
             System.out.println("Try this instead:");
@@ -159,20 +172,12 @@ public class MathQuiz {
      * third easy math problem
      */
     public static void easy3(){
-        a=ranGen();
-        b=ranGen();
+        setVariables();
         
-        realAnswer = a*b;
-        for(timesAttempted = 0;timesAttempted < TIMES_ALLOWED;){
-            System.out.println(a + " x " + b + " =");
-            getAnswer();
-            if (userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        realAnswer = a*b; 
+        System.out.println(a + " x " + b + " =");
+        answerCollection();
+        
         harder = getHarder();
         if(harder = false){
             System.out.println("Try this instead:");
@@ -184,20 +189,12 @@ public class MathQuiz {
      * forth easy math problem
      */
     public static void easy4(){
-        a=ranGen();
-        b=notZeroGen();
+        setDivisorVariables();
         
-        realAnswer = a/b;
-        for(timesAttempted = 0;timesAttempted < TIMES_ALLOWED;){
-            System.out.println(a + " / " + b + " =");
-            getAnswer();
-           if (userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        realAnswer = a/b; 
+        System.out.println(a + " / " + b + " =");
+        answerCollection();
+        
         harder = getHarder();
         if(harder = false){
             System.out.println("Try this instead:");
@@ -209,21 +206,12 @@ public class MathQuiz {
      * First medium math problem
      */
     public static void medium1(){
-        a=ranGen();
-        b=ranGen();
-        c=ranGen();
+        setVariables();
         
         realAnswer = a+b-c;
-        for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
-            System.out.println(a + " + " + b + " - " + c + " =");
-            getAnswer();
-            if(userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        System.out.println(a + " + " + b + " - " + c + " =");
+        answerCollection();
+        
         harder = getHarder();
         if(harder = false){
             System.out.println("Try this instead:");
@@ -235,21 +223,12 @@ public class MathQuiz {
     * second medium math problem
     */
     public static void medium2(){
-        a=ranGen();
-        b=ranGen();
-        c=ranGen();
+        setVariables();
         
         realAnswer = a+b*c;
-        for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
-            System.out.println(a + " + " + b + " x " + c + " =");
-            getAnswer();
-            if(userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        System.out.println(a + " + " + b + " x " + c + " =");
+        answerCollection();
+        
         harder = getHarder();
         if(harder=false){
             System.out.println("Try this instead:");
@@ -261,21 +240,12 @@ public class MathQuiz {
     * Third medium math problem
     */
     public static void medium3(){
-        a=ranGen();
-        b=ranGen();
-        c=ranGen();
+        setVariables();
         
         realAnswer = a*b-c;
-        for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
-            System.out.println(a + " x " + b + " - " + c + " =");
-            getAnswer();
-            if(userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        System.out.println(a + " x " + b + " - " + c + " =");
+        answerCollection();
+        
         harder = getHarder();
         if(harder=false){
             System.out.println("Try this instead:");
@@ -287,21 +257,12 @@ public class MathQuiz {
     * Forth medium math problem
     */
     public static void medium4(){
-        a=ranGen();
-        b=ranGen();
-        c=ranGen();
+        setVariables();
         
         realAnswer = a*b*c;
-        for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
-            System.out.println(a + " x " + b + " x " + c + " =");
-            getAnswer();
-            if(userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        System.out.println(a + " x " + b + " x " + c + " =");
+        answerCollection();
+        
         harder = getHarder();
         if(harder = false){
             System.out.println("Try this instead:");
@@ -313,21 +274,12 @@ public class MathQuiz {
     * First difficult math problem
     */
     public static void difficult1(){
-        a=ranGen();
-        b=notZeroGen();
-        c=ranGen();
+        setDivisorVariables();
         
         realAnswer = a/b+c;
-        for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
-            System.out.println(a + " / " + b + " + " + c + " =");
-            getAnswer();
-            if(userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        System.out.println(a + " / " + b + " + " + c + " =");
+        answerCollection();
+        
         harder = getHarder();
         if(harder = false){
             System.out.println("Try this instead:");
@@ -339,21 +291,12 @@ public class MathQuiz {
     * second difficult math problem
     */
     public static void difficult2(){
-        a=ranGen();
-        b=notZeroGen();
-        c=ranGen();
+        setDivisorVariables();
         
         realAnswer = a/b-c;
-        for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
-            System.out.println(a + " / " + b + " - " + c + " =");
-            getAnswer();
-            if(userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        System.out.println(a + " / " + b + " - " + c + " =");
+        answerCollection();
+        
         harder = getHarder();
         if(harder = false){
             System.out.println("Try this instead:");
@@ -365,21 +308,12 @@ public class MathQuiz {
      * Third difficult math problem
      */ 
     public static void difficult3(){
-        a=ranGen();
-        b=ranGen();
-        c=notZeroGen();
+        setDivisorVariables();
         
-        realAnswer = a*b/c;
-        for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
-            System.out.println(a + " * " + b + " / " + c + " =");
-            getAnswer();
-            if(userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        realAnswer = a*c/b;
+        System.out.println(a + " * " + c + " / " + b + " =");
+        answerCollection();
+       
         harder = getHarder();
         if (harder = false){
             System.out.println("Try this instead:");
@@ -396,21 +330,13 @@ public class MathQuiz {
         c=notZeroGen();
         
         realAnswer = a/b/c;
-        for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
-            System.out.println(a + " / " + b + " / " + c + " =");
-            getAnswer();
-            if(userAnswer == realAnswer){
-                correct();
-                break;
-            }else{
-                incorrect();
-            }//close if/else
-        }//close for loop
+        System.out.println(a + " / " + b + " / " + c + " =");
+        answerCollection();
+        
         harder = getHarder();
         if (harder=false){
             System.out.println("Try this instead:");
             difficult3();
         }
-    }//close difficult2
-      
+    }//close difficult2      
 }//close class MathQuiz
