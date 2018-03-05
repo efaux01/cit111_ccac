@@ -18,29 +18,54 @@ public class MathQuiz {
     static int timesAttempted;
     static final int TIMES_ALLOWED = 3;
     static boolean harder = false;
-    static final int UPPER_LIMIT = 12;
+    static final int UPPER_LIMIT = 6;
+    static final int TOTAL_PROBLEMS = 25;
+    static int answeredProblems = 0;
+    static int questionNumber = 1;
     
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         System.out.println("Welcome to Math Quiz!");
+        System.out.println("Please answer the following questions:");
         
-        easy1();
-        easy2();
-        easy3();
-        easy4();
-        medium1();
-        medium2();
-        medium3();
-        medium4();
-        difficult1();
-        difficult2();
-        difficult3();
-        difficult4();
-        
-        System.out.println("Congradulations! You have completed the Math Quiz");
+       control();
     }//close main
+    
+    public static void control(){
+        if (questionNumber == 0){questionNumber = 1;}
+        System.out.println("questionNumber: " + questionNumber);
+        switch(questionNumber){
+            case 1:
+                easy1();
+            case 2:
+                easy2();
+            case 3:
+                easy3();
+            case 4:
+                easy4();
+            case 5:
+                medium1();
+            case 6:
+                medium2();
+            case 7:
+                medium3();
+            case 8:
+                medium4();
+            case 9:
+                difficult1();
+            case 10:
+                difficult2();
+            case 11:
+                difficult3();
+            case 12:
+                difficult4();
+            case 13:
+                answeredProblems = TOTAL_PROBLEMS;
+                programEnd();
+        }
+    }
     
     /**
      * Generate a random number
@@ -96,14 +121,25 @@ public class MathQuiz {
      * @return boolean harder 
      */
     public static boolean getHarder(){
-        final int TOO_MANY = 2;
+        final int JUST_ONCE = 1;
         
-        if(timesAttempted < TOO_MANY){
+        if(timesAttempted == JUST_ONCE){
             harder =  true;
-        }else harder = false;
+        }else {
+            harder = false;
+        }//close if/else
         return harder;
     }//close getHarder
     
+    public static void easyOrHard(){
+        harder = getHarder();
+        if(harder == true){
+            questionNumber ++;
+        }else{
+            questionNumber --;
+        }
+        control();
+    }
     /**
      * set 3 variables to random integers
      */
@@ -132,14 +168,26 @@ public class MathQuiz {
                 incorrect();
             }//close if/else
         }//close for loop
+        programEnd();
     }// close answerCollection 
+    
+    /**
+     * ends program if user answered 30 questions
+     */
+    public static void programEnd(){
+        if(answeredProblems == TOTAL_PROBLEMS){
+            System.out.println("Congradulations! You have reached the end of Math Quiz");
+            System.exit(0);
+        }else{
+            answeredProblems = answeredProblems + 1;
+        }
+    }
     
     /**
      * first easy math problem
      */
     public static void easy1(){
-        while(harder = false){
-            System.out.println("Try this:");
+        while(harder == false){
             setVariables();
         
             realAnswer = a+b;
@@ -147,8 +195,8 @@ public class MathQuiz {
             answerCollection();
             
             harder = getHarder();
+            answeredProblems ++;
         }//close while loop
-        
     }//close easy1
     
     /**
@@ -161,11 +209,7 @@ public class MathQuiz {
         System.out.println(a + " - " + b + " =");
         answerCollection();
         
-        harder = getHarder();
-        if(harder = false){
-            System.out.println("Try this instead:");
-            easy1();
-        }
+        easyOrHard();
     }//close easy2
   
     /**
@@ -178,11 +222,7 @@ public class MathQuiz {
         System.out.println(a + " x " + b + " =");
         answerCollection();
         
-        harder = getHarder();
-        if(harder = false){
-            System.out.println("Try this instead:");
-            easy2();
-        }
+        easyOrHard();
     }//close easy3
     
     /**
@@ -191,15 +231,11 @@ public class MathQuiz {
     public static void easy4(){
         setDivisorVariables();
         
-        realAnswer = a/b; 
+        realAnswer = a%b; 
         System.out.println(a + " / " + b + " =");
         answerCollection();
         
-        harder = getHarder();
-        if(harder = false){
-            System.out.println("Try this instead:");
-            easy3();
-        }
+        easyOrHard();
     }//close easy4
     
     /**
@@ -212,11 +248,7 @@ public class MathQuiz {
         System.out.println(a + " + " + b + " - " + c + " =");
         answerCollection();
         
-        harder = getHarder();
-        if(harder = false){
-            System.out.println("Try this instead:");
-            easy4();
-        }
+        easyOrHard();
     }//close medium1
     
    /** 
@@ -229,11 +261,7 @@ public class MathQuiz {
         System.out.println(a + " + " + b + " x " + c + " =");
         answerCollection();
         
-        harder = getHarder();
-        if(harder=false){
-            System.out.println("Try this instead:");
-            medium1();
-        }
+        easyOrHard();
     }//close medium2
    
    /**
@@ -246,11 +274,7 @@ public class MathQuiz {
         System.out.println(a + " x " + b + " - " + c + " =");
         answerCollection();
         
-        harder = getHarder();
-        if(harder=false){
-            System.out.println("Try this instead:");
-            medium2();
-        }
+        easyOrHard();
     }//close medium3
    
    /**
@@ -263,11 +287,7 @@ public class MathQuiz {
         System.out.println(a + " x " + b + " x " + c + " =");
         answerCollection();
         
-        harder = getHarder();
-        if(harder = false){
-            System.out.println("Try this instead:");
-            medium3();
-        }
+        easyOrHard();
     }//close medium4
    
    /**
@@ -276,15 +296,11 @@ public class MathQuiz {
     public static void difficult1(){
         setDivisorVariables();
         
-        realAnswer = a/b+c;
+        realAnswer = a%b+c;
         System.out.println(a + " / " + b + " + " + c + " =");
         answerCollection();
         
-        harder = getHarder();
-        if(harder = false){
-            System.out.println("Try this instead:");
-            medium4();
-        }
+        easyOrHard();
     }//close difficult1
    
    /**
@@ -293,15 +309,11 @@ public class MathQuiz {
     public static void difficult2(){
         setDivisorVariables();
         
-        realAnswer = a/b-c;
+        realAnswer = a%b-c;
         System.out.println(a + " / " + b + " - " + c + " =");
         answerCollection();
         
-        harder = getHarder();
-        if(harder = false){
-            System.out.println("Try this instead:");
-            difficult1();
-        }
+        easyOrHard();
     }//close difficult2
    
     /** 
@@ -310,15 +322,11 @@ public class MathQuiz {
     public static void difficult3(){
         setDivisorVariables();
         
-        realAnswer = a*c/b;
+        realAnswer = a*c%b;
         System.out.println(a + " * " + c + " / " + b + " =");
         answerCollection();
        
-        harder = getHarder();
-        if (harder = false){
-            System.out.println("Try this instead:");
-            difficult2();
-        }
+        easyOrHard();
     }//close difficult2
     
     /**
@@ -329,14 +337,10 @@ public class MathQuiz {
         b=notZeroGen();
         c=notZeroGen();
         
-        realAnswer = a/b/c;
+        realAnswer = a%b%c;
         System.out.println(a + " / " + b + " / " + c + " =");
         answerCollection();
         
-        harder = getHarder();
-        if (harder=false){
-            System.out.println("Try this instead:");
-            difficult3();
-        }
+        easyOrHard();
     }//close difficult2      
 }//close class MathQuiz
