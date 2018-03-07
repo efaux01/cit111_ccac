@@ -1,6 +1,7 @@
 /*
- * A program of a basic math quiz that gets harder or easier based on correct 
- * or incorrect answers.
+ * A program of a basic math quiz that generates equations with random numbers 
+ * and gets harder or easier based on correct. It also terminates after a 
+ * number of equations.
  */
 package mathquiz;
     import java.util.Random;
@@ -33,6 +34,9 @@ public class MathQuiz {
        control();
     }//close main
     
+    /**
+     * control which equation is accessed each time
+     */
     public static void control(){
         if (questionNumber == 0){questionNumber = 1;}
         System.out.println("questionNumber: " + questionNumber);
@@ -64,8 +68,8 @@ public class MathQuiz {
             case 13:
                 answeredProblems = TOTAL_PROBLEMS;
                 programEnd();
-        }
-    }
+        }//close switch
+    }//close control
     
     /**
      * Generate a random number
@@ -75,7 +79,7 @@ public class MathQuiz {
         Random randGenerator = new Random();
         int number = randGenerator.nextInt(UPPER_LIMIT) ;
         return number;
-    }// close method ranGen
+    }// close ranGen
     
    /**
     * Generate a random number that is not zero
@@ -131,15 +135,19 @@ public class MathQuiz {
         return harder;
     }//close getHarder
     
+    /**
+     * decides if questions should get easier or harder
+     */
     public static void easyOrHard(){
         harder = getHarder();
         if(harder == true){
             questionNumber ++;
         }else{
             questionNumber --;
-        }
+        }//close if/else
         control();
-    }
+    }//close easyOrHard
+    
     /**
      * set 3 variables to random integers
      */
@@ -158,6 +166,10 @@ public class MathQuiz {
         c = ranGen();
     }//close setDivisorVaribales
     
+    /**
+     * collects an answer and decides if it is correct. Repeats allowed number 
+     * of times if answer is incorrect.
+     */
     public static void answerCollection(){
         for(timesAttempted = 0;timesAttempted<TIMES_ALLOWED;){
             getAnswer();
@@ -172,7 +184,7 @@ public class MathQuiz {
     }// close answerCollection 
     
     /**
-     * ends program if user answered 30 questions
+     * ends program if user answered a specific number of questions
      */
     public static void programEnd(){
         if(answeredProblems == TOTAL_PROBLEMS){
@@ -180,8 +192,8 @@ public class MathQuiz {
             System.exit(0);
         }else{
             answeredProblems = answeredProblems + 1;
-        }
-    }
+        }//close if/else
+    }//close programEnd
     
     /**
      * first easy math problem
