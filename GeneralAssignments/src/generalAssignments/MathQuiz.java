@@ -3,7 +3,7 @@
  * and gets harder or easier based on correct. It also terminates after a 
  * number of equations.
  */
-package mathquiz;
+package generalAssignments;
     import java.util.Random;
     import java.util.Scanner;
 /**
