@@ -18,11 +18,17 @@ public class HorrorMovieSurvivalTest {
         static int gender = 0;
         static int location;
         static boolean firstTime = true;
+        static int group;
+        static int movement;
+        static boolean survival = true;
         
     public static void main (String[]args){
         System.out.println("Welcome to the Horror Movie Survival Test! "
                 + "Continue on to find out if you will survive.");
-        
+        start();
+    }//close main
+
+    public static void start(){
         if(firstTime){
             name();
             movieSelect();
@@ -39,7 +45,9 @@ public class HorrorMovieSurvivalTest {
                     basicInfo();
             }//close switch
         }//close if/else
-        
+        whereAreYou();
+        aloneOrTogether();
+        runOrStay();
     }//close main
     public static void name(){
         System.out.println("What is your first name?");
@@ -76,6 +84,7 @@ public class HorrorMovieSurvivalTest {
             
             gender = getNumber();
         }
+        firstTime=false;
     }//close basicInfo
     
     public static String getText(){
@@ -88,7 +97,7 @@ public class HorrorMovieSurvivalTest {
         Scanner scanNum = new Scanner(System.in);
         int num = scanNum.nextInt();
         return num;
-    }
+    }//close getNumber
     
     public static void movieSelect(){
         int movieType = 0;
@@ -100,12 +109,43 @@ public class HorrorMovieSurvivalTest {
         }//close while loop
     }//close movieSelector
     
-    public static void location(){
-        while(location !=1 && location !=2 && location !=3 && location!=4){
+    public static void whereAreYou(){
+        while(location !=1 && location !=2 && location !=3){
             System.out.println("Where do you live?");
             System.out.println("1.The Country \n2.The Suburbs \n3.The City");
+            location = getNumber();
+        }//close while
+    }//close whereAreYou()
+    
+    public static void aloneOrTogether(){
+        System.out.println("How many people are you with? If you've decided to go it alone type 0.");
+        group = getNumber();
+    }//close aloneOrTogether
+    
+    public static void runOrStay(){
+        while(movement !=1 && movement !=2){
+            System.out.println("Do you stay put in your current location or make a run for it?");
+            System.out.println("1.Stay where you are \n2.Run for it!");
+            movement = getNumber();
+        }//close while
+    }//close runOrStay
+    
+    public static void endProgram(){
+        System.out.println("You have reached the end of the horror movie survival test!");
+        if(survival){
+            System.out.println("Congratulations, you survived the horror movie!");
+        }else{
+            System.out.println("Aw, that's too bad. You died in the horror movie!");
+        }//close if/else
+        
+        System.out.println("Would you like to: \n1.Restart the test \n2.End the program");
+        int restart = getNumber();
+        switch(restart){
+            case 1:
+               start(); 
+            case 2:
+               
         }
         
-    
     }
 }//close class HorrorMovieSurvivalTest
