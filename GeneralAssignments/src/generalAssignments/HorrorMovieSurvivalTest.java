@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * A madeup test to decide if the user would survive various types of horror movies
  */
 package generalAssignments;
     import java.util.Scanner;
@@ -31,6 +29,9 @@ public class HorrorMovieSurvivalTest {
         
     }//close main
 
+    /**
+     * Start point which creates the sequence of methods & sends it to the tabulation methods
+     */
     public static void start(){
         if(firstTime){
             name();
@@ -67,18 +68,29 @@ public class HorrorMovieSurvivalTest {
         endProgram();
     }//close main
     
+    /**
+     * gets a String from the user
+     * @return String
+     */
     public static String getText(){
         Scanner userInput = new Scanner(System.in);
         String text = userInput.next();
         return text;
     }//close getText
     
+    /**
+     * gets an integer from the user
+     * @return integer
+     */
     public static int getNumber(){
         Scanner scanNum = new Scanner(System.in);
         int num = scanNum.nextInt();
         return num;
     }//close getNumber
     
+    /**
+     * collects first & last name from user
+     */
     public static void name(){
         System.out.println("What is your first name?");
     
@@ -88,7 +100,10 @@ public class HorrorMovieSurvivalTest {
         lName = getText();
     }//close name
     
-     public static void basicInfo(){
+    /**
+     * collects basic information about the user
+     */ 
+    public static void basicInfo(){
         System.out.println("First, let's get some basic information about you.\n");
         
         System.out.println("How old are you?");
@@ -117,7 +132,10 @@ public class HorrorMovieSurvivalTest {
         firstTime=false;
     }//close basicInfo
      
-    public static void movieSelect(){
+    /**
+     * user chooses what type of movie they are in
+     */
+     public static void movieSelect(){
         movieType = 0;
         while(movieType !=1 && movieType !=2 && movieType !=3 && movieType !=4){
             System.out.println("What kind of Horror Movie are you in?");
@@ -126,6 +144,9 @@ public class HorrorMovieSurvivalTest {
         }//close while loop
     }//close movieSelector
     
+    /**
+     * user chooses general location
+     */
     public static void whereAreYou(){
         location = 0;
         while(location !=1 && location !=2 && location !=3){
@@ -135,11 +156,17 @@ public class HorrorMovieSurvivalTest {
         }//close while
     }//close whereAreYou()
     
+    /**
+     * user chooses how many people they are with
+     */
     public static void aloneOrTogether(){
         System.out.println("How many people are you with? If you've decided to go it alone type 0.");
         group = getNumber();
     }//close aloneOrTogether
     
+    /**
+     * user decides to stay put or run Away
+     */
     public static void runOrStay(){
         movement = 0;
         while(movement !=1 && movement !=2){
@@ -149,6 +176,9 @@ public class HorrorMovieSurvivalTest {
         }//close while
     }//close runOrStay
     
+    /**
+     * calculates score for a zombie movie
+     */
     public static void zombie(){
         if(age >= 50){
             score = score + 10;
@@ -201,6 +231,9 @@ public class HorrorMovieSurvivalTest {
         }
     }//close zombie
     
+    /**
+     * calculates score for a serial killer movie
+     */
     public static void serialKiller(){
         if(age >= 40){
             score = score + 5;
@@ -248,6 +281,9 @@ public class HorrorMovieSurvivalTest {
         }
     }//close serialKiller
     
+    /**
+     * calculates score for an alien movie
+     */
     public static void alien(){
        if(age >= 50){
             score = score + 1;
@@ -300,6 +336,9 @@ public class HorrorMovieSurvivalTest {
         } 
     }//close alien
     
+    /**
+     * calculates score for a supernatural movie
+     */
     public static void supernatural(){
         if(age >= 35){
             score = score + 10;
@@ -352,6 +391,9 @@ public class HorrorMovieSurvivalTest {
         }
     }//close supernatural
     
+    /**
+     * End of the program, displays if you survived
+     */
     public static void endProgram(){
         System.out.println("You have reached the end of the horror movie survival test!");
         if(survival){
