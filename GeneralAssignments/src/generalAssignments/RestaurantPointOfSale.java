@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Program simulating a simple point of sale system for a restaaurant that 
+ * serves 4 types of sliders. Also keeps track of ingredient supplies on hand
  */
 package generalAssignments;
     import java.util.Scanner;
@@ -33,10 +32,21 @@ public class RestaurantPointOfSale {
     static String type;
     static String ingredient;
     
+    static boolean addToOrder = true;
+    static int ingredientNumber;
+    static int slidersOrdered;
+    
+    /**
+     * main
+     * @param args 
+     */
     public static void main(String args []){
         menu();
     }//close main
     
+    /**
+     * First menu, user decides what to do/view
+     */
     public static void menu(){
         boolean validChoice = true;
         int chooseMenu;
@@ -47,7 +57,7 @@ public class RestaurantPointOfSale {
         chooseMenu=getInt();
         switch(chooseMenu){
             case 1:
-                orderMenu();
+                createNewOrder();
                 break;
             case 2:
                 viewItemsOrdered();
@@ -66,19 +76,28 @@ public class RestaurantPointOfSale {
         }
         }while(validChoice=false);
     }//close menu
-        
-                
-    public static void orderMenu(){
+    
+    /**
+     * creates a new order by zeroing out old order values
+     */
+    public static void createNewOrder(){
+        System.out.println("\nNew order created.");
         porkSlidersOnOrder = 0;
         turkeySlidersOnOrder = 0;
         hamburgerSlidersOnOrder = 0;
-        chickenSlidersOnOrder = 0;
-        
+        chickenSlidersOnOrder = 0; 
+        orderMenu();
+    }//close createNewOrder
+    
+    /**
+     * user chooses what to do to an order
+     */            
+    public static void orderMenu(){
         boolean validChoice=true;
         int orderMenuChoice;
         do{
-            System.out.println("New order started. What would you like to do?");
-            System.out.println("1.Add Items to Order \n2.View Receept \n3.View "
+            System.out.println("\nWhat would you like to do?");
+            System.out.println("1.Add Items to Order \n2.View Receipt \n3.View "
                     + "Items On Order \n4.Return to Main Menu \n5.Exit Program");
             orderMenuChoice = getInt();
             switch(orderMenuChoice){
@@ -100,6 +119,9 @@ public class RestaurantPointOfSale {
         }while(validChoice=false);
     }//close orderMenu
     
+    /**
+     * user decides what kind of slider to add to the order
+     */
     public static void sliderChoice(){
         boolean validEntry = true;
         int decideSliderType;
@@ -138,143 +160,238 @@ public class RestaurantPointOfSale {
         }while(validEntry=false);
     }//close sliderChoice
     
+    /**
+     * user orders pork sliders setting type, adjusting pork orders for the day
+     * and the supplies that are consumed for the ordered value
+     */
     public static void orderPorkSliders(){
         type = "Pulled pork";
-        porkSlidersOnOrder=howManyOrdered();
-        totalPorkSlidersOrdered+=porkSlidersOnOrder;
-        bunSupplyAdjust(porkSlidersOnOrder);
-        porkSupplyAdjust(porkSlidersOnOrder);
-        BBQSupplyAdjust(porkSlidersOnOrder);
+        howManyOrdered();
+        addToOrder=true;
+        bunSupplyAdjust();
+        porkSupplyAdjust();
+        BBQSupplyAdjust();
+        if(addToOrder=true){
+            porkSlidersOnOrder+=slidersOrdered;
+            totalTurkeySlidersOrdered+=slidersOrdered;
+        }
         orderMenu();
     }//close orderPorkSliders
     
+    /**
+     * user orders turkey sliders setting type, adjusting pork orders for the day
+     * and the supplies that are consumed for the ordered value
+     */
     public static void orderTurkeySliders(){
         type = "Turkey";
-        turkeySlidersOnOrder=howManyOrdered();
-        totalTurkeySlidersOrdered+=turkeySlidersOnOrder;
-        turkeySupplyAdjust(turkeySlidersOnOrder);
-        bunSupplyAdjust(turkeySlidersOnOrder);
-        baconSupplyAdjust(turkeySlidersOnOrder);
-        lettuceSupplyAdjust(turkeySlidersOnOrder);
-        cheeseSupplyAdjust(turkeySlidersOnOrder);
+        howManyOrdered();
+        addToOrder=true;
+        turkeySupplyAdjust();
+        bunSupplyAdjust();
+        baconSupplyAdjust();
+        lettuceSupplyAdjust();
+        cheeseSupplyAdjust();
+        if(addToOrder=true){
+            turkeySlidersOnOrder+=slidersOrdered;
+            totalTurkeySlidersOrdered+=slidersOrdered;
+        }
         orderMenu();
     }//close orderTurkeySliders
     
+    /**
+     * user orders hamburger sliders setting type, adjusting pork orders for the day
+     * and the supplies that are consumed for the ordered value
+     */
     public static void orderHamburgerSliders(){
         type = "Hamburger";
-        hamburgerSlidersOnOrder=howManyOrdered();
-        totalHamburgerSlidersOrdered+=hamburgerSlidersOnOrder;
-        bunSupplyAdjust(hamburgerSlidersOnOrder);
-        beefSupplyAdjust(hamburgerSlidersOnOrder);
-        cheeseSupplyAdjust(hamburgerSlidersOnOrder);
-        lettuceSupplyAdjust(hamburgerSlidersOnOrder);
-        tomatoSupplyAdjust(hamburgerSlidersOnOrder);
+        howManyOrdered();
+        addToOrder=true;
+        bunSupplyAdjust();
+        beefSupplyAdjust();
+        cheeseSupplyAdjust();
+        lettuceSupplyAdjust();
+        tomatoSupplyAdjust();
+        if(addToOrder=true){
+            hamburgerSlidersOnOrder+=slidersOrdered;
+            totalHamburgerSlidersOrdered+=slidersOrdered;
+        }
         orderMenu();
     }//close orderHamburgerSliders
     
+    /**
+     * user orders chicken sliders setting type, adjusting pork orders for the day
+     * and the supplies that are consumed for the ordered value
+     */
     public static void orderChickenSliders(){
         type="Grilled Chicken";
-        chickenSlidersOnOrder=howManyOrdered();
-        totalChickenSlidersOrdered+=chickenSlidersOnOrder;
-        bunSupplyAdjust(chickenSlidersOnOrder);
-        chickenSupplyAdjust(chickenSlidersOnOrder);
-        lettuceSupplyAdjust(chickenSlidersOnOrder);
-        tomatoSupplyAdjust(chickenSlidersOnOrder);
+        howManyOrdered();
+        addToOrder=true;
+        bunSupplyAdjust();
+        chickenSupplyAdjust();
+        lettuceSupplyAdjust();
+        tomatoSupplyAdjust();
+        if(addToOrder=true){
+            totalChickenSlidersOrdered+=slidersOrdered;
+            chickenSlidersOnOrder+=slidersOrdered;
+        }
         orderMenu();
     }//close orderChickenSliders
     
-    public static int howManyOrdered(){
+    /**
+     * asks for and collects the number of sliders being ordered of variable type
+     */
+    public static void howManyOrdered(){
         System.out.println("How many " + type + " sliders were ordered?");
-        int numOrdered = getInt();
-        return numOrdered;
+        slidersOrdered= getInt();
     }//close howManyOrdered
     
-    public static void bunSupplyAdjust(int numOrdered){
+    /**
+     * adjusts bun supply based on number of sliders ordered
+     */
+    public static void bunSupplyAdjust(){
         ingredient="Buns";
-        bunSupply-=calculateFourTimes(numOrdered);
+        bunSupply-=calculateFourTimes();
         checkSupply(bunSupply);
     }//close bunSupplyCheckAdjust
     
-    public static void porkSupplyAdjust(int numOrdered){
+    /**
+     * adjusts pork supply based on number of sliders ordered
+     */
+    public static void porkSupplyAdjust(){
         ingredient="Pork";
-        porkSupply-=calculateHalf(numOrdered);
+        porkSupply-=calculateHalf(slidersOrdered);
         checkSupply(porkSupply);
     }//close porkSupplyCheckAdjust
     
-    public static void BBQSupplyAdjust(int numOrdered){
+    /**
+     * adjusts BBQ sauce supply based on number of sliders ordered
+     */
+    public static void BBQSupplyAdjust(){
         ingredient="BBQ Sauce";
-        BBQSupply-=numOrdered;
+        BBQSupply-=slidersOrdered;
         checkSupply(BBQSupply);
     }//close BBQSupplyCheckAdjust
     
-    public static void turkeySupplyAdjust(int numOrdered){
+    /**
+     * adjusts turkey supply based on number of sliders ordered
+     */
+    public static void turkeySupplyAdjust(){
         ingredient="Turkey";
-        turkeySupply-=calculateHalf(numOrdered);
+        turkeySupply-=calculateHalf(slidersOrdered);
         checkSupply(turkeySupply);
     }//close turkeySupplyCheckAdjust
     
-    public static void baconSupplyAdjust(int numOrdered){
+    /**
+     * adjusts bacon supply based on number of sliders ordered
+     */
+    public static void baconSupplyAdjust(){
         ingredient="Bacon";
-        baconSupply-=calculateFourTimes(numOrdered);
+        baconSupply-=calculateFourTimes();
         checkSupply(baconSupply);
     }//close baconSupplyCheckAdjust
     
-    public static void lettuceSupplyAdjust(int numOrdered){
+    /**
+     * adjusts lettuce supply based on number of sliders ordered
+     */
+    public static void lettuceSupplyAdjust(){
         ingredient="Lettuce";
-        lettuceSupply-=calculateFourTimes(numOrdered);
+        lettuceSupply-=calculateFourTimes();
         checkSupply(lettuceSupply);
     }//close lettuceSupplyCheckAdjust
     
-    public static void cheeseSupplyAdjust(int numOrdered){
+    /**
+     * adjusts cheese supply based on number of sliders ordered
+     */
+    public static void cheeseSupplyAdjust(){
         ingredient="Cheese";
-        cheeseSupply-=calculateFourTimes(numOrdered);
+        cheeseSupply-=calculateFourTimes();
         checkSupply(cheeseSupply);
     }//close cheesesupplyCheckAdjust
     
-    public static void beefSupplyAdjust(int numOrdered){
+    /**
+     * adjusts beef supply based on number of sliders ordered
+     */
+    public static void beefSupplyAdjust(){
         ingredient="Beef";
-        beefSupply-=calculateHalf(numOrdered);
+        beefSupply-=calculateHalf(slidersOrdered);
         checkSupply(beefSupply);
     }//close beefSupplyCheckAdjust
     
-    public static void tomatoSupplyAdjust(int numOrdered){
+    /**
+     * adjusts tomato supply based on number of sliders ordered
+     */
+    public static void tomatoSupplyAdjust(){
         ingredient="Tomato";
-        tomatoSupply-=calculateFourTimes(numOrdered);
+        ingredientNumber=calculateFourTimes();
         checkSupply(tomatoSupply);
+        supplyAdjuster(tomatoSupply);
     }//close tomatoSupplyCheckAdjust
     
-    public static void chickenSupplyAdjust(int numOrdered){
+    /**
+     * adjusts chicken supply based on number of sliders ordered
+     * @param numOrdered 
+     */
+    public static void chickenSupplyAdjust(){
         ingredient="Chicken";
-        chickenSupply-=calculateFourTimes(numOrdered);
+        ingredientNumber=calculateFourTimes();
         checkSupply(chickenSupply);
+        supplyAdjuster(chickenSupply);
     }//close chickenSupplyCheckAdjust
     
+    public static void supplyAdjuster(double onHand){
+        if(addToOrder=true){
+            onHand-=ingredientNumber;
+        }
+    }
     
+    /**
+     * checks amount of an ingredient on hand against the amount needed for the order
+     * @param currentSupply 
+     */
     public static void checkSupply(double currentSupply){
-        if(currentSupply<1){
+        if(currentSupply-ingredientNumber<1){
             System.out.println("The order cannot be completed as ordered. You "
                     + "cannot make that many " + type + " Sliders. You are out"
                             + " of " + ingredient);
+            System.out.println("Item(s) not added to order.");
+            addToOrder=false;
         }
     }//close checkSupply
         
-    public static int calculateFourTimes(int numSliders){
-        int number = numSliders * 4;
+    /**
+     * calculates four times number of sliders
+     * @return number
+     */
+    public static int calculateFourTimes(){
+        int number = slidersOrdered * 4;
         return number;
     }//close calculateFourTimes
     
+    /**
+     * calculates half the number of values
+     * @param numSliders
+     * @return 
+     */
     public static double calculateHalf(int numSliders){
         double number = numSliders/4;
         return number;
     }//close calculateHalf
     
+    /**
+     * collects an integer from the user
+     * @return integer
+     */
     public static int getInt(){
         Scanner userInput = new Scanner(System.in);
         int choice = userInput.nextInt();
         return choice;
     }//close getInt
     
+    /**
+     * Displays the current active order
+     */
     public static void viewItemsOrdered(){
+        System.out.println("********Current Order*******");
         if(porkSlidersOnOrder!=0){
             System.out.println("Pulled Pork Sliders \tx " + porkSlidersOnOrder);
         }
@@ -289,6 +406,9 @@ public class RestaurantPointOfSale {
         }
     }//close viewItemsOrdered
     
+    /**
+     * displays the receipt for the order
+     */
     public static void receipt(){
         final double PORK_SLIDER_PRICE = 0;
         final double TURKEY_SLIDER_PRICE = 0;
@@ -325,12 +445,23 @@ public class RestaurantPointOfSale {
         System.out.println("Total \t\t\t= $" + total);
     }//close receipt
     
+    /**
+     * calculates the subtotal of the number of 
+     * @param sliderPrice
+     * @param numSliders
+     * @return subtotal of one kind of slider
+     */
     public static double calcSliderSubtotal(double sliderPrice, int numSliders){
         double sliderSubtotal = sliderPrice*numSliders;
         System.out.println(type + " Sliders \tx " + numSliders + "\t@ $" + sliderPrice);
         return sliderSubtotal;
     }//close calcSliderSubtotal
     
+    /**
+     * calculates the tax on an order
+     * @param subtotal total of order without tax
+     * @return amount of tax
+     */
     public static double calcTax(double subtotal){
         final double TAX_RATE=0.7;
         double tax = subtotal*TAX_RATE;
@@ -338,6 +469,9 @@ public class RestaurantPointOfSale {
         return tax;
     }//close calcSubtotal
     
+    /**
+     * displays the on hand amount of each ingredient
+     */
     public static void currentSupplyStatus(){
         System.out.println("*******Onhand Supply Status*******");
         System.out.println("Buns: " + bunSupply);
@@ -354,6 +488,10 @@ public class RestaurantPointOfSale {
         menu();
     }//close currentSupplyStatus
     
+    /**
+     * displays the total amount of each type of slider ordered during the run
+     * of the program
+     */
     public static void slidersOrderedToday(){
         System.out.println("*******Slider Order Report*******");
         System.out.println("Pulled Pork Sliders: " + totalPorkSlidersOrdered);
@@ -364,6 +502,9 @@ public class RestaurantPointOfSale {
         menu();
     }//close slidersOrderedToday
     
+    /** 
+     * exits the program
+     */
     public static void exitProgram(){
         System.exit(0);
     }//close exitProgram
