@@ -6,7 +6,7 @@
 package airportSimulation;
 
 /**
- *
+ * Blueprint for a PlaneModel object
  * @author eliza
  */
 public class PlaneModel {
@@ -14,4 +14,5 @@ public class PlaneModel {
     public int numFlightAttendants;
     public int planeSize;
     public String planeType;
-}
+    
+}//close PlaneModel
